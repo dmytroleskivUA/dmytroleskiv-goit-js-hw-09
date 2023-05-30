@@ -9,6 +9,8 @@ const hours = document.querySelector('[data-hours]');
 const minutes = document.querySelector('[data-minutes]');
 const seconds = document.querySelector('[data-seconds]');
 
+flatpickr(datePicker, options);
+
 btnStart.disabled = true;
 
 const options = {
@@ -41,8 +43,6 @@ function convertMs(ms) {
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
-
-flatpickr(datePicker, options);
 
 btnStart.addEventListener('click', () => {
   btnStart.disabled = true;
