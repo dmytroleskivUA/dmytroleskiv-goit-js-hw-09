@@ -38,27 +38,31 @@ function convertMs(ms) {
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
   return { days, hours, minutes, seconds };
 }
+
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
+
 flatpickr(datePicker, options);
+
 btnStart.addEventListener('click', () => {
-  let timer = setInterval(() => {
-    let countdown = new Date(datePicker.value) - new Date();
-    btnStart.disabled = true;
-    if (countdown >= 0) {
-      let timeObject = convertMs(countdown);
-      days.textContent = addLeadingZero(timeObject.days);
-      hours.textContent = addLeadingZero(timeObject.hours);
-      minutes.textContent = addLeadingZero(timeObject.minutes);
-      seconds.textContent = addLeadingZero(timeObject.seconds);
-      if (countdown <= 10000) {
-        timeContainer.style.color = 'red';
+  btnStart.disabled = true;
+
+  let countdown = new Date(datePicker.value) - new Date();
+  if (countdown >= 0) {
+    let timer = setInterval(() => {
+      countdown -= 1000;
+
+      if (countdown >= 0) {
+        let timeObject = convertMs(countdown);
+        days.textContent = addLeadingZero(timeObject.days);
+        hours.textContent = addLeadingZero(timeObject.hours);
+        minutes.textContent = addLeadingZero(timeObject.minutes);
+        seconds.textContent = addLeadingZero(timeObject.seconds);
+      } else {
+        clearInterval(timer);
+        Notiflix.Notify.success('Countdown finished');
       }
-    } else {
-      Notiflix.Notify.success('Countdown finished');
-      timeContainer.style.color = 'black';
-      clearInterval(timer);
-    }
-  }, 1000);
+    }, 1000);
+  }
 });
