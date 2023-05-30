@@ -2,17 +2,6 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
 
-const datePicker = document.querySelector('#datetime-picker');
-const btnStart = document.querySelector('[data-start]');
-const days = document.querySelector('[data-days]');
-const hours = document.querySelector('[data-hours]');
-const minutes = document.querySelector('[data-minutes]');
-const seconds = document.querySelector('[data-seconds]');
-
-flatpickr(datePicker, options);
-
-btnStart.disabled = true;
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -27,6 +16,15 @@ const options = {
     }
   },
 };
+
+const datePicker = document.querySelector('#datetime-picker');
+const btnStart = document.querySelector('[data-start]');
+const days = document.querySelector('[data-days]');
+const hours = document.querySelector('[data-hours]');
+const minutes = document.querySelector('[data-minutes]');
+const seconds = document.querySelector('[data-seconds]');
+
+btnStart.disabled = true;
 
 function convertMs(ms) {
   const second = 1000;
@@ -43,6 +41,8 @@ function convertMs(ms) {
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
+
+flatpickr(datePicker, options);
 
 btnStart.addEventListener('click', () => {
   btnStart.disabled = true;
@@ -61,6 +61,7 @@ btnStart.addEventListener('click', () => {
       } else {
         clearInterval(timer);
         Notiflix.Notify.success('Countdown finished');
+        timeContainer.style.color = 'black';
       }
     }, 1000);
   }
